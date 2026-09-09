@@ -496,7 +496,7 @@
     </div>
   </div>
 
-  <!-- ================= ADMIN STUDIO CMS MODAL (MULTIPLE PHOTOS 1-5 SUPPORT) ================= -->
+  <!-- ================= ADMIN STUDIO CMS MODAL ================= -->
   <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-black/15 rounded-2xl max-w-4xl w-full p-6 relative space-y-6 max-h-[92vh] overflow-y-auto shadow-2xl">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-neutral-500 hover:text-black text-sm cursor-pointer">✕</button>
@@ -514,7 +514,7 @@
         </div>
       </div>
 
-      <!-- Tab 1: Add Drop with 1-5 Photos Gallery -->
+      <!-- Tab 1: Add Drop (Min 1, Max 5 Photos) -->
       <div id="admin-tab-add" class="space-y-4">
         <form id="admin-add-product-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
@@ -539,14 +539,11 @@
             <input type="text" id="adm-custom-category-input" placeholder="e.g. limited-edition" class="w-full bg-neutral-100 border border-black/10 rounded-xl px-4 py-2 text-xs text-black focus:outline-none font-mono-code" />
           </div>
 
-          <!-- Multiple Photos Upload (Min 1, Max 5) -->
           <div class="space-y-2 md:col-span-2">
-            <label class="text-[10px] uppercase font-mono-code text-neutral-600 block">Product Gallery Photos (Minimum 1, Maximum 5)</label>
+            <label class="text-[10px] uppercase font-mono-code text-neutral-600 block">Product Gallery Photos (Min 1, Max 5 Photos)</label>
             <div class="p-4 bg-neutral-100 border border-black/10 rounded-xl space-y-3">
               <input type="file" id="adm-file-input" accept="image/*" multiple class="block w-full text-xs text-neutral-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-black file:text-white cursor-pointer font-mono-code" />
-              <div id="adm-preview-container" class="flex gap-2 overflow-x-auto pt-2">
-                <!-- Dynamic previews -->
-              </div>
+              <div id="adm-preview-container" class="flex gap-2 overflow-x-auto pt-2"></div>
             </div>
           </div>
 
