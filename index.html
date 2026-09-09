@@ -39,13 +39,12 @@
 </head>
 
 <body class="bg-white text-black min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
-<body class="bg-white text-black min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
   <!-- ================= 1. ANNOUNCEMENT MARQUEE TICKER ================= -->
   <div class="w-full bg-white border-b border-black/10 py-2 overflow-hidden text-[10px] tracking-[0.25em] uppercase text-neutral-700 font-mono-code">
     <div class="marquee-container">
       <div class="marquee-content space-x-10">
-        <span class="font-bold text-black">⚡ GET 10% OFF ON ORDERS ABOVE ₹1,000</span>
+        <span class="font-bold text-black">GET 10% OFF ON ORDERS ABOVE ₹1,000</span>
         <span>•</span>
         <span>CASH ON DELIVERY AVAILABLE ACROSS INDIA</span>
         <span>•</span>
@@ -53,7 +52,7 @@
         <span>•</span>
         <span>ZERO FADE HIGH-DENSITY GRAPHICS</span>
         <span>•</span>
-        <span class="font-bold text-black">⚡ GET 10% OFF ON ORDERS ABOVE ₹1,000</span>
+        <span class="font-bold text-black">GET 10% OFF ON ORDERS ABOVE ₹1,000</span>
         <span>•</span>
         <span>CASH ON DELIVERY AVAILABLE ACROSS INDIA</span>
       </div>
@@ -80,12 +79,20 @@
         </a>
       </div>
 
-      <!-- Right: Search Icon + Cart Bag -->
-      <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Right: Search Icon + Wishlist + Cart Bag -->
+      <div class="flex items-center gap-1 sm:gap-2">
         <button onclick="toggleSearchModal(true)" class="p-2 text-neutral-700 hover:text-black transition cursor-pointer" aria-label="Search Drops">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
+        </button>
+
+        <!-- Wishlist Icon between Search and Bag -->
+        <button onclick="openWishlistModal()" class="p-2 text-neutral-700 hover:text-red-600 transition cursor-pointer relative" aria-label="Wishlist">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span id="wishlist-badge" class="absolute top-1 right-0.5 bg-red-600 text-white text-[9px] font-bold px-1 rounded-full font-mono-code leading-tight hidden">0</span>
         </button>
 
         <button onclick="toggleCart(true)" class="relative p-2 text-neutral-700 hover:text-black transition cursor-pointer" aria-label="Open Bag">
@@ -99,13 +106,13 @@
     </div>
   </header>
 
-  <!-- ================= SLIDE-OUT NAVIGATION MENU ================= -->
+  <!-- ================= SLIDE-OUT NAVIGATION MENU (CLOSED BY DEFAULT) ================= -->
   <div id="nav-drawer-overlay" onclick="toggleMobileNav(false)" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity cursor-pointer"></div>
   <aside id="nav-drawer" class="fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-white border-r border-black/10 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between p-6 shadow-2xl">
     
     <div class="space-y-6">
       <div class="flex items-center justify-between pb-4 border-b border-black/10">
-        <span class="text-xs font-bold tracking-[0.25em] uppercase text-black font-cinzel">NAVIGATION</span>
+        <span id="nav-header-title" class="text-xs font-bold tracking-[0.25em] uppercase text-black font-cinzel">HELLO MEMBERS</span>
         <button onclick="toggleMobileNav(false)" class="text-neutral-500 hover:text-black text-base p-1 cursor-pointer">✕</button>
       </div>
 
@@ -173,11 +180,25 @@
     </div>
   </div>
 
+  <!-- ================= WISHLIST MODAL ================= -->
+  <div id="wishlist-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-black/15 rounded-2xl max-w-lg w-full p-6 relative space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-neutral-500 hover:text-black text-sm cursor-pointer">✕</button>
+      <div>
+        <span class="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono-code">SAVED DROPS</span>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-black mt-0.5">Your Wishlist</h3>
+      </div>
+      <div id="wishlist-items-container" class="space-y-3 max-h-[60vh] overflow-y-auto">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
   <!-- ================= MAIN CONTENT ================= -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-16 flex-1 w-full">
+  <main class="w-full space-y-16 flex-1">
     
-    <!-- Hero Banner -->
-    <section class="relative rounded-3xl overflow-hidden border border-black/15 bg-neutral-100 min-h-[520px] sm:min-h-[600px] flex items-end my-4 shadow-xl">
+    <!-- Hero Banner (Full Stretch Edge-to-Edge) -->
+    <section class="relative w-full overflow-hidden bg-neutral-100 min-h-[520px] sm:min-h-[600px] flex items-end my-0 shadow-xl">
       <div class="absolute inset-0 w-full h-full overflow-hidden z-0">
         <img 
           id="hero-banner-img"
@@ -206,55 +227,60 @@
       </div>
     </section>
 
-    <!-- Trust Row -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-3 py-2 reveal-on-scroll">
-      <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
-        <span class="text-xs font-bold text-black uppercase font-mono-code block">10% Off ₹1,000+</span>
-        <p class="text-[10px] text-neutral-600 leading-snug">Auto-applied above ₹1,000.</p>
-      </div>
-      <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
-        <span class="text-xs font-bold text-black uppercase font-mono-code block">Express COD</span>
-        <p class="text-[10px] text-neutral-600 leading-snug">Doorstep delivery across India.</p>
-      </div>
-      <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
-        <span class="text-xs font-bold text-black uppercase font-mono-code block">220 GSM Bio-Wash</span>
-        <p class="text-[10px] text-neutral-600 leading-snug">Heavy combed cotton blanks.</p>
-      </div>
-      <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
-        <span class="text-xs font-bold text-black uppercase font-mono-code block">No Exchange / Refund</span>
-        <p class="text-[10px] text-neutral-600 leading-snug">All capsule sales are final.</p>
-      </div>
-    </section>
+    <!-- Rest of the website sections inside padded container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-16 w-full pb-10">
 
-    <!-- Dynamic Category Filter Pills -->
-    <div class="space-y-3 text-center reveal-on-scroll">
-      <div id="category-filters-container" class="flex flex-wrap items-center justify-center gap-2">
-        <!-- Rendered dynamically by script.js -->
-      </div>
-    </div>
-
-    <!-- Product Grid -->
-    <section id="new-arrivals" class="space-y-6 reveal-on-scroll">
-      <div class="flex items-center justify-between border-b border-black/10 pb-3">
-        <div>
-          <h2 class="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-black font-cinzel">Exclusive Drops</h2>
-          <p class="text-[10px] text-neutral-500 font-mono-code mt-0.5">Heavyweight bio-washed streetwear collection</p>
+      <!-- Trust Row -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-3 py-2 reveal-on-scroll">
+        <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
+          <span class="text-xs font-bold text-black uppercase font-mono-code block">10% Off ₹1,000+</span>
+          <p class="text-[10px] text-neutral-600 leading-snug">Auto-applied above ₹1,000.</p>
         </div>
-        <span id="catalog-count-badge" class="text-[9px] uppercase font-mono-code text-neutral-600 bg-black/5 px-2.5 py-1 rounded border border-black/10">06 / 17 Drops</span>
+        <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
+          <span class="text-xs font-bold text-black uppercase font-mono-code block">Express COD</span>
+          <p class="text-[10px] text-neutral-600 leading-snug">Doorstep delivery across India.</p>
+        </div>
+        <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
+          <span class="text-xs font-bold text-black uppercase font-mono-code block">220 GSM Bio-Wash</span>
+          <p class="text-[10px] text-neutral-600 leading-snug">Heavy combed cotton blanks.</p>
+        </div>
+        <div class="p-4 bg-[#f9f9f9] border border-black/10 rounded-xl space-y-1 text-left">
+          <span class="text-xs font-bold text-black uppercase font-mono-code block">No Exchange / Refund</span>
+          <p class="text-[10px] text-neutral-600 leading-snug">All capsule sales are final.</p>
+        </div>
+      </section>
+
+      <!-- Dynamic Category Filter Pills -->
+      <div class="space-y-3 text-center reveal-on-scroll">
+        <div id="category-filters-container" class="flex flex-wrap items-center justify-center gap-2">
+          <!-- Rendered dynamically by script.js -->
+        </div>
       </div>
 
-      <div id="catalog-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8"></div>
+      <!-- Product Grid -->
+      <section id="new-arrivals" class="space-y-6 reveal-on-scroll">
+        <div class="flex items-center justify-between border-b border-black/10 pb-3">
+          <div>
+            <h2 class="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-black font-cinzel">Exclusive Drops</h2>
+            <p class="text-[10px] text-neutral-500 font-mono-code mt-0.5">Heavyweight bio-washed streetwear collection</p>
+          </div>
+          <span id="catalog-count-badge" class="text-[9px] uppercase font-mono-code text-neutral-600 bg-black/5 px-2.5 py-1 rounded border border-black/10">06 / 17 Drops</span>
+        </div>
 
-      <div id="view-all-container" class="pt-6 text-center">
-        <button onclick="expandFullCatalog()" class="px-8 py-3.5 bg-black hover:bg-neutral-800 text-white border border-black text-xs font-bold uppercase tracking-[0.2em] rounded-full transition duration-200 cursor-pointer shadow-xl">
-          View All Drops
-        </button>
-      </div>
-    </section>
+        <div id="catalog-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8"></div>
+
+        <div id="view-all-container" class="pt-6 text-center">
+          <button onclick="expandFullCatalog()" class="px-8 py-3.5 bg-black hover:bg-neutral-800 text-white border border-black text-xs font-bold uppercase tracking-[0.2em] rounded-full transition duration-200 cursor-pointer shadow-xl">
+            View All Drops
+          </button>
+        </div>
+      </section>
+
+    </div>
 
   </main>
 
-  <!-- ================= FOOTER ================= -->
+  <!-- ================= FOOTER WITH INSTAGRAM, WHATSAPP & EMAIL LOGOS ================= -->
   <footer class="bg-white border-t border-black/10 py-12 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div class="space-y-2 md:col-span-2">
@@ -274,10 +300,26 @@
       </div>
       <div class="space-y-2">
         <h4 class="text-xs font-bold uppercase tracking-wider text-black">Support Desk</h4>
-        <ul class="text-[11px] text-neutral-600 space-y-1.5 font-mono-code">
-          <li><a href="https://instagram.com/vehraanstudio_" target="_blank" class="hover:text-black">Instagram @vehraanstudio_</a></li>
-          <li>WhatsApp: +91 7400246429</li>
-          <li>Payment: Cash on Delivery (COD)</li>
+        <ul class="text-[11px] text-neutral-600 space-y-2 font-mono-code">
+          <li>
+            <a href="https://instagram.com/vehraanstudio_" target="_blank" class="hover:text-black flex items-center gap-2">
+              <svg class="w-4 h-4 text-black shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <span>Instagram @vehraanstudio_</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/917400246429" target="_blank" class="hover:text-black flex items-center gap-2">
+              <svg class="w-4 h-4 text-black shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>WhatsApp: +91 7400246429</span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:vehraan@gmail.com" class="hover:text-black flex items-center gap-2">
+              <svg class="w-4 h-4 text-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>vehraan@gmail.com</span>
+            </a>
+          </li>
+          <li class="pt-1">Payment: Cash on Delivery (COD)</li>
         </ul>
       </div>
     </div>
@@ -296,8 +338,12 @@
     <div class="bg-white border border-black/15 rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[92vh] overflow-y-auto">
       <button onclick="closeProductDetailsModal()" class="absolute top-4 right-4 text-neutral-500 hover:text-black text-lg p-2 transition cursor-pointer">✕</button>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-        <div id="modal-image-container" class="w-full aspect-[1/1.15] bg-[#f8f8f8] rounded-xl border border-black/10 p-4 flex items-center justify-center overflow-hidden">
-          <img id="modal-p-img" src="" alt="Product Image" class="w-full h-full object-contain" />
+        <!-- Multi-Photo Gallery Container -->
+        <div class="space-y-3">
+          <div id="modal-image-container" class="w-full aspect-[1/1.15] bg-[#f8f8f8] rounded-xl border border-black/10 p-2 flex items-center justify-center overflow-hidden">
+            <img id="modal-p-img" src="" alt="Product Image" class="w-full h-full object-contain" />
+          </div>
+          <div id="modal-gallery-thumbs" class="flex gap-2 overflow-x-auto pb-1"></div>
         </div>
         <div class="space-y-4 text-left">
           <div>
@@ -450,7 +496,7 @@
     </div>
   </div>
 
-  <!-- ================= ADMIN STUDIO CMS MODAL ================= -->
+  <!-- ================= ADMIN STUDIO CMS MODAL (MULTIPLE PHOTOS 1-5 SUPPORT) ================= -->
   <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-black/15 rounded-2xl max-w-4xl w-full p-6 relative space-y-6 max-h-[92vh] overflow-y-auto shadow-2xl">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-neutral-500 hover:text-black text-sm cursor-pointer">✕</button>
@@ -463,12 +509,12 @@
         </div>
         <div class="flex items-center gap-2 flex-wrap">
           <button type="button" onclick="switchAdminTab('add-product')" id="admin-btn-add" class="px-3.5 py-2 bg-black text-white rounded-lg text-xs font-bold uppercase">Add Drop +</button>
-          <button type="button" onclick="switchAdminTab('change-hero')" id="admin-btn-hero" class="px-3.5 py-2 bg-neutral-200 text-black rounded-lg text-xs font-bold uppercase">Change Hero 🖼️</button>
-          <button type="button" onclick="switchAdminTab('manage-products')" id="admin-btn-manage" class="px-3.5 py-2 bg-neutral-200 text-black rounded-lg text-xs font-bold uppercase">Manage Catalog ⚙️</button>
+          <button type="button" onclick="switchAdminTab('change-hero')" id="admin-btn-hero" class="px-3.5 py-2 bg-neutral-200 text-black rounded-lg text-xs font-bold uppercase">Change Hero</button>
+          <button type="button" onclick="switchAdminTab('manage-products')" id="admin-btn-manage" class="px-3.5 py-2 bg-neutral-200 text-black rounded-lg text-xs font-bold uppercase">Manage Catalog</button>
         </div>
       </div>
 
-      <!-- Tab 1: Add Drop -->
+      <!-- Tab 1: Add Drop with 1-5 Photos Gallery -->
       <div id="admin-tab-add" class="space-y-4">
         <form id="admin-add-product-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
@@ -493,12 +539,13 @@
             <input type="text" id="adm-custom-category-input" placeholder="e.g. limited-edition" class="w-full bg-neutral-100 border border-black/10 rounded-xl px-4 py-2 text-xs text-black focus:outline-none font-mono-code" />
           </div>
 
+          <!-- Multiple Photos Upload (Min 1, Max 5) -->
           <div class="space-y-2 md:col-span-2">
-            <label class="text-[10px] uppercase font-mono-code text-neutral-600 block">Product Photo (Upload from Gallery)</label>
-            <div class="flex flex-col sm:flex-row items-center gap-4 p-4 bg-neutral-100 border border-black/10 rounded-xl">
-              <input type="file" id="adm-file-input" accept="image/*" class="block w-full text-xs text-neutral-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-black file:text-white cursor-pointer font-mono-code" />
-              <div id="adm-preview-box" class="hidden w-16 h-16 bg-white rounded-xl border border-black/15 overflow-hidden flex items-center justify-center shrink-0">
-                <img id="adm-preview-img" src="" alt="Preview" class="w-full h-full object-contain" />
+            <label class="text-[10px] uppercase font-mono-code text-neutral-600 block">Product Gallery Photos (Minimum 1, Maximum 5)</label>
+            <div class="p-4 bg-neutral-100 border border-black/10 rounded-xl space-y-3">
+              <input type="file" id="adm-file-input" accept="image/*" multiple class="block w-full text-xs text-neutral-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-black file:text-white cursor-pointer font-mono-code" />
+              <div id="adm-preview-container" class="flex gap-2 overflow-x-auto pt-2">
+                <!-- Dynamic previews -->
               </div>
             </div>
           </div>
@@ -538,7 +585,7 @@
         </div>
       </div>
 
-      <!-- Tab 3: Manage Catalog Inventory (Stock, Price, Delete) -->
+      <!-- Tab 3: Manage Catalog Inventory -->
       <div id="admin-tab-manage" class="hidden space-y-4">
         <h3 class="text-sm font-bold uppercase tracking-wider text-black">Live Catalog Inventory</h3>
         <p class="text-xs text-neutral-500">Edit prices, toggle stock availability, or delete existing drops instantly.</p>
