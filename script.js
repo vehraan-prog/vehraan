@@ -2,7 +2,7 @@
    VEHRAAN STREETWEAR — PRODUCTION MASTER SCRIPT (DYNAMIC CMS)
    - Real-time Firestore Sync & Merge-based Updates
    - Clean Product Cards & Wishlist Functionality
-   - Multiple Photos (1 to 5) Support for Products
+   - Multiple Photos (1 to 5) Support with Thumbnail Swipe View
    ========================================================================== */
 
 // 1. DEFAULT PRODUCTS CATALOG
@@ -528,7 +528,7 @@ function renderWishlistItems() {
   }).join("");
 }
 
-// 6. QUICK-VIEW PRODUCT MODAL WITH GALLERY THUMBNAILS
+// 6. QUICK-VIEW PRODUCT MODAL WITH THUMBNAIL GALLERY SWIPE
 window.openProductDetailsModal = function(productId) {
   const product = catalogProducts.find(p => String(p.id) === String(productId));
   if (!product) return;
@@ -1109,7 +1109,7 @@ window.closePolicyModal = function() {
   document.getElementById("policy-modal")?.classList.add("hidden");
 };
 
-// 13. STUDIO CMS & ADMIN PANEL (SUPPORTING 1-5 PRODUCT IMAGES)
+// 13. STUDIO CMS & ADMIN PANEL (SUPPORTING MULTIPLE PHOTOS 1-5 UPLOAD & FIRESTORE SYNC)
 window.triggerAdminAccess = async function() {
   if (!currentUser || !firebase.auth().currentUser) {
     showToast("Please sign in with your admin account first.");
@@ -1221,16 +1221,20 @@ function setupAdminForm() {
     try {
       if (typeof firebase !== "undefined" && firebase.firestore) {
         await firebase.firestore().collection("products").doc(newDrop.id).set(newDrop, { merge: true });
+        showToast(`Published "${name}" successfully!`);
+      } else {
+        alert("Firestore is not initialized properly!");
       }
     } catch (err) {
       console.error("Firestore product upload error:", err);
+      alert("Upload failed! Image size might be too large for database storage.");
     }
 
     form.reset();
     uploadedProductImages = [];
-    document.getElementById("adm-preview-container").innerHTML = "";
+    const previewContainer = document.getElementById("adm-preview-container");
+    if (previewContainer) previewContainer.innerHTML = "";
     document.getElementById("adm-custom-category-box")?.classList.add("hidden");
-    showToast(`Published "${name}" successfully!`);
     closeAdminModal();
   });
 }
