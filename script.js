@@ -1,8 +1,8 @@
 /* ==========================================================================
    VEHRAAN STREETWEAR — PRODUCTION MASTER SCRIPT (DYNAMIC CMS)
    - Real-time Firestore Sync & Merge-based Updates
-   - Clean Product Cards (Sizes moved to Quick-View Modal / Bag)
-   - 7-Day Expected Delivery Date Calculator & My Orders History
+   - Clean Product Cards & Wishlist Functionality
+   - Multiple Photos (1 to 5) Support for Products
    ========================================================================== */
 
 // 1. DEFAULT PRODUCTS CATALOG
@@ -12,7 +12,7 @@ let defaultProducts = [
     name: "Symbiote Noir Spider Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-1.jpg",
+    images: ["images/tee-1.jpg"],
     fallbackImage: "images/tee-1.jpeg",
     sizes: ["S", "M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "spider", "marvel", "graphic", "tee"],
@@ -23,7 +23,7 @@ let defaultProducts = [
     name: "Miles Morales Spiderverse Crimson Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-2.jpg",
+    images: ["images/tee-2.jpg"],
     fallbackImage: "images/tee-2.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "spider", "marvel", "spiderverse", "graphic", "tee"],
@@ -34,7 +34,7 @@ let defaultProducts = [
     name: "Toji Inverted Spear Cursed Wrap Tee",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-3.jpg",
+    images: ["images/tee-3.jpg"],
     fallbackImage: "images/tee-3.jpeg",
     sizes: ["M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "anime", "toji", "jjk", "tee"],
@@ -45,7 +45,7 @@ let defaultProducts = [
     name: "Formula 1 Racing Minimalist Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-4.jpg",
+    images: ["images/tee-4.jpg"],
     fallbackImage: "images/tee-4.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "f1", "motorsport", "tee"],
@@ -56,7 +56,7 @@ let defaultProducts = [
     name: "Vagabond Ronin Katana Wrap Tee",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-5.jpg",
+    images: ["images/tee-5.jpg"],
     fallbackImage: "images/tee-5.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "anime", "vagabond", "samurai", "tee"],
@@ -67,7 +67,7 @@ let defaultProducts = [
     name: "Red Web 'Who?' Crimson Graphic Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-11.jpg",
+    images: ["images/tee-11.jpg"],
     fallbackImage: "images/tee-11.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "spider", "streetwear", "tee"],
@@ -78,7 +78,7 @@ let defaultProducts = [
     name: "Solo Leveling Igris 'ARISE' White Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-12.jpg",
+    images: ["images/tee-12.jpg"],
     fallbackImage: "images/tee-12.jpeg",
     sizes: ["M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "anime", "solo leveling", "tee"],
@@ -89,7 +89,7 @@ let defaultProducts = [
     name: "Spider Web Shatter Red Graphic Tee",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-13.jpg",
+    images: ["images/tee-13.jpg"],
     fallbackImage: "images/tee-13.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "spider", "streetwear", "tee"],
@@ -100,7 +100,7 @@ let defaultProducts = [
     name: "Creative High Passion Street Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-14.jpg",
+    images: ["images/tee-14.jpg"],
     fallbackImage: "images/tee-14.jpeg",
     sizes: ["M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "typography", "tee"],
@@ -111,7 +111,7 @@ let defaultProducts = [
     name: "Zenitsu Thunder Breathing Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-6.jpg",
+    images: ["images/tee-6.jpg"],
     fallbackImage: "images/tee-6.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "anime", "demon slayer", "tee"],
@@ -122,7 +122,7 @@ let defaultProducts = [
     name: "Toji Fushiguro Katana Stance Tee",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-7.jpg",
+    images: ["images/tee-7.jpg"],
     fallbackImage: "images/tee-7.jpeg",
     sizes: ["M", "L", "XL"],
     tags: ["all", "men", "women", "anime", "toji", "tee"],
@@ -133,7 +133,7 @@ let defaultProducts = [
     name: "Toji Dagger Smirk Oversized Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-8.jpg",
+    images: ["images/tee-8.jpg"],
     fallbackImage: "images/tee-8.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "anime", "toji", "tee"],
@@ -144,7 +144,7 @@ let defaultProducts = [
     name: "Solo Leveling 'ARISE' Jinwoo Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-9.jpg",
+    images: ["images/tee-9.jpg"],
     fallbackImage: "images/tee-9.jpeg",
     sizes: ["S", "M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "anime", "solo leveling", "tee"],
@@ -155,7 +155,7 @@ let defaultProducts = [
     name: "Crimson Bloodline TOJI Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-10.jpg",
+    images: ["images/tee-10.jpg"],
     fallbackImage: "images/tee-10.jpeg",
     sizes: ["M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "anime", "toji", "tee"],
@@ -166,8 +166,7 @@ let defaultProducts = [
     name: "AOT Kanji & Levi Ackerman Dual Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-15.jpg",
-    backImage: "images/tee-16.jpg",
+    images: ["images/tee-15.jpg", "images/tee-16.jpg"],
     fallbackImage: "images/tee-15.jpeg",
     fallbackBackImage: "images/tee-16.jpeg",
     sizes: ["S", "M", "L", "XL"],
@@ -179,7 +178,7 @@ let defaultProducts = [
     name: "Marvel The Punisher Distressed Skull Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-17.jpg",
+    images: ["images/tee-17.jpg"],
     fallbackImage: "images/tee-17.jpeg",
     sizes: ["S", "M", "L", "XL", "XXL"],
     tags: ["all", "men", "women", "marvel", "punisher", "tee"],
@@ -190,7 +189,7 @@ let defaultProducts = [
     name: "Maki Zenin Awakened Manga Drop",
     price: 599,
     originalPrice: 999,
-    image: "images/tee-18.jpg",
+    images: ["images/tee-18.jpg"],
     fallbackImage: "images/tee-18.jpeg",
     sizes: ["S", "M", "L", "XL"],
     tags: ["all", "men", "women", "anime", "maki", "jjk", "tee"],
@@ -207,8 +206,17 @@ let isExpanded = false;
 const INITIAL_LIMIT = 6;
 const FLAT_DELIVERY_FEE = 120;
 let currentUnit = "in";
-let uploadedProductBase64 = "";
+let uploadedProductImages = [];
 let uploadedHeroBase64 = "";
+
+// Wishlist State
+let wishlist = [];
+try {
+  wishlist = JSON.parse(localStorage.getItem("vehraan_wishlist")) || [];
+  if (!Array.isArray(wishlist)) wishlist = [];
+} catch (e) {
+  wishlist = [];
+}
 
 // 2. CACHE INITIALIZATION
 try {
@@ -232,8 +240,7 @@ let cart = rawCart
     id: item.id,
     name: item.name,
     price: Number(item.price) || 599,
-    image: item.image,
-    fallbackImage: item.fallbackImage || item.image,
+    image: item.images ? item.images[0] : item.image,
     size: item.size || "M",
     qty: Number(item.qty) || 1
   }));
@@ -304,9 +311,12 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAdminForm();
   initScrollAnimations();
   updateCartBadge();
+  updateWishlistBadge();
   
   if (currentUser) {
-    updateAuthUI(currentUser.displayName ? currentUser.displayName.split(" ")[0].toUpperCase() : "MEMBER");
+    const firstName = currentUser.displayName ? currentUser.displayName.split(" ")[0].toUpperCase() : "MEMBER";
+    updateAuthUI(firstName);
+    updateNavHeaderTitle(firstName);
   }
 });
 
@@ -391,21 +401,13 @@ function renderCatalog() {
 
 function createCardHTML(product) {
   const isAvailable = product.inStock !== false;
+  const isWishlisted = wishlist.some(id => String(id) === String(product.id));
+  const imgList = product.images || [product.image];
+  const primaryImg = imgList[0];
 
-  const mediaHTML = product.backImage ? `
-    <div class="product-media grid grid-cols-2 gap-1 p-2 bg-neutral-100">
-      <div class="relative w-full h-full flex flex-col items-center justify-center">
-        <span class="absolute top-1 left-1 bg-black text-[7px] font-mono-code px-1 py-0.5 rounded text-white uppercase">Front</span>
-        <img src="${product.image}" alt="${product.name} Front" loading="lazy" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='${product.fallbackImage || product.image}';" />
-      </div>
-      <div class="relative w-full h-full flex flex-col items-center justify-center border-l border-black/10">
-        <span class="absolute top-1 left-1 bg-black text-[7px] font-mono-code px-1 py-0.5 rounded text-white uppercase">Back</span>
-        <img src="${product.backImage}" alt="${product.name} Back" loading="lazy" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='${product.fallbackBackImage || product.backImage}';" />
-      </div>
-    </div>
-  ` : `
-    <div class="product-media">
-      <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null; this.src='${product.fallbackImage || product.image}';" />
+  const mediaHTML = `
+    <div class="product-media relative w-full aspect-[1/1.15] bg-white overflow-hidden flex items-center justify-center p-2">
+      <img src="${primaryImg}" alt="${product.name}" loading="lazy" class="w-full h-full object-contain transition duration-500" onerror="this.onerror=null; this.src='${product.fallbackImage || primaryImg}';" />
     </div>
   `;
 
@@ -429,7 +431,15 @@ function createCardHTML(product) {
 
   return `
     <div class="clean-product-card justify-between cursor-pointer relative ${!isAvailable ? 'opacity-75' : ''}" id="card-${product.id}" onclick="openProductDetailsModal('${product.id}')">
-      ${!isAvailable ? '<span class="absolute top-2 right-2 z-10 bg-red-600 text-white text-[9px] font-mono-code px-2 py-0.5 rounded uppercase font-bold">Sold Out</span>' : ''}
+      ${!isAvailable ? '<span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-mono-code px-2 py-0.5 rounded uppercase font-bold">Sold Out</span>' : ''}
+      
+      <!-- Wishlist Heart Button -->
+      <button onclick="event.stopPropagation(); toggleWishlist('${product.id}')" class="absolute top-2 right-2 z-10 p-2 bg-white/85 backdrop-blur-sm rounded-full shadow hover:bg-white transition cursor-pointer" aria-label="Wishlist Heart">
+        <svg class="w-5 h-5 ${isWishlisted ? 'text-red-600 fill-red-600' : 'text-neutral-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+
       ${mediaHTML}
 
       <div class="p-3 pt-3 flex-1 flex flex-col justify-between space-y-2.5" onclick="event.stopPropagation()">
@@ -453,35 +463,100 @@ function createCardHTML(product) {
 
 window.expandFullCatalog = function() { isExpanded = true; renderCatalog(); };
 
-// 6. QUICK-VIEW PRODUCT MODAL
+// Wishlist Logic
+window.toggleWishlist = function(productId) {
+  const index = wishlist.indexOf(productId);
+  if (index > -1) {
+    wishlist.splice(index, 1);
+    showToast("Removed from wishlist");
+  } else {
+    wishlist.push(productId);
+    showToast("Added to wishlist");
+  }
+  localStorage.setItem("vehraan_wishlist", JSON.stringify(wishlist));
+  updateWishlistBadge();
+  renderCatalog();
+  if (!document.getElementById("wishlist-modal").classList.contains("hidden")) {
+    renderWishlistItems();
+  }
+};
+
+function updateWishlistBadge() {
+  const badge = document.getElementById("wishlist-badge");
+  if (!badge) return;
+  if (wishlist.length > 0) {
+    badge.innerText = wishlist.length;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+window.openWishlistModal = function() {
+  renderWishlistItems();
+  document.getElementById("wishlist-modal")?.classList.remove("hidden");
+};
+
+window.closeWishlistModal = function() {
+  document.getElementById("wishlist-modal")?.classList.add("hidden");
+};
+
+function renderWishlistItems() {
+  const container = document.getElementById("wishlist-items-container");
+  if (!container) return;
+
+  const savedProducts = catalogProducts.filter(p => wishlist.includes(p.id));
+
+  if (savedProducts.length === 0) {
+    container.innerHTML = `<p class="py-12 text-center text-xs text-neutral-500 font-mono-code">Your wishlist is empty.</p>`;
+    return;
+  }
+
+  container.innerHTML = savedProducts.map(p => {
+    const img = p.images ? p.images[0] : p.image;
+    return `
+      <div class="flex items-center gap-3 p-2.5 bg-neutral-100 border border-black/10 rounded-xl">
+        <img src="${img}" class="w-12 h-14 object-cover rounded-lg border border-black/10" />
+        <div class="flex-1 min-w-0 text-left">
+          <h4 class="text-xs font-semibold text-black truncate">${p.name}</h4>
+          <p class="text-[10px] text-neutral-600 font-mono-code">₹${p.price}</p>
+        </div>
+        <button onclick="openProductDetailsModal('${p.id}'); closeWishlistModal();" class="px-3 py-1.5 bg-black text-white text-[10px] uppercase font-bold rounded-lg">View</button>
+        <button onclick="toggleWishlist('${p.id}')" class="text-neutral-500 hover:text-red-600 text-sm p-1">✕</button>
+      </div>
+    `;
+  }).join("");
+}
+
+// 6. QUICK-VIEW PRODUCT MODAL WITH GALLERY THUMBNAILS
 window.openProductDetailsModal = function(productId) {
   const product = catalogProducts.find(p => String(p.id) === String(productId));
   if (!product) return;
 
   const modal = document.getElementById("product-details-modal");
-  const imgContainer = document.getElementById("modal-image-container");
+  const mainImg = document.getElementById("modal-p-img");
+  const thumbsContainer = document.getElementById("modal-gallery-thumbs");
   const name = document.getElementById("modal-p-name");
   const price = document.getElementById("modal-p-price");
   const sizesContainer = document.getElementById("modal-p-sizes");
   const addBtn = document.getElementById("modal-p-add-btn");
   const isAvailable = product.inStock !== false;
 
-  if (imgContainer) {
-    if (product.backImage) {
-      imgContainer.innerHTML = `
-        <div class="w-full h-full grid grid-cols-2 gap-2">
-          <div class="relative flex items-center justify-center">
-            <span class="absolute top-1 left-1 bg-black text-[8px] font-mono-code px-1.5 py-0.5 rounded text-white border border-black/10">FRONT</span>
-            <img src="${product.image}" class="w-full h-full object-contain" />
-          </div>
-          <div class="relative flex items-center justify-center border-l border-black/10">
-            <span class="absolute top-1 left-1 bg-black text-[8px] font-mono-code px-1.5 py-0.5 rounded text-white border border-black/10">BACK</span>
-            <img src="${product.backImage}" class="w-full h-full object-contain" />
-          </div>
-        </div>
-      `;
+  const images = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  if (mainImg) mainImg.src = images[0];
+
+  if (thumbsContainer) {
+    if (images.length > 1) {
+      thumbsContainer.innerHTML = images.map((img) => `
+        <button onclick="document.getElementById('modal-p-img').src='${img}'" class="w-12 h-14 rounded-lg border border-black/20 overflow-hidden shrink-0 focus:border-black cursor-pointer">
+          <img src="${img}" class="w-full h-full object-cover" />
+        </button>
+      `).join("");
+      thumbsContainer.classList.remove("hidden");
     } else {
-      imgContainer.innerHTML = `<img id="modal-p-img" src="${product.image}" alt="${product.name}" class="w-full h-full object-contain" />`;
+      thumbsContainer.innerHTML = "";
+      thumbsContainer.classList.add("hidden");
     }
   }
 
@@ -547,6 +622,7 @@ window.addToBag = function(productId) {
 
   const size = activeSelectedSizes[item.id] || "M";
   const existing = cart.find(c => String(c.id) === String(item.id) && c.size === size);
+  const primaryImg = item.images ? item.images[0] : item.image;
 
   if (existing) {
     existing.qty = Number(existing.qty || 0) + 1;
@@ -555,8 +631,7 @@ window.addToBag = function(productId) {
       id: item.id,
       name: item.name,
       price: Number(item.price) || 599,
-      image: item.image,
-      fallbackImage: item.fallbackImage,
+      image: primaryImg,
       size: size,
       qty: 1
     });
@@ -624,7 +699,7 @@ function renderCartItems() {
     const itemQty = Number(item.qty) || 1;
     return `
       <div class="flex items-center gap-3 p-2.5 bg-neutral-100 border border-black/10 rounded-xl">
-        <img src="${item.image}" alt="${item.name}" class="w-12 h-14 object-cover rounded-lg border border-black/10" onerror="this.src='${item.fallbackImage || item.image}'" />
+        <img src="${item.image}" alt="${item.name}" class="w-12 h-14 object-cover rounded-lg border border-black/10" />
         <div class="flex-1 min-w-0 text-left">
           <h4 class="text-xs font-semibold text-black truncate">${item.name}</h4>
           <p class="text-[10px] text-neutral-600 font-mono-code">Size: <strong class="text-black">${item.size}</strong> | ₹${itemPrice}</p>
@@ -646,7 +721,7 @@ function renderCartItems() {
     discount = Math.round(rawSubtotal * 0.10);
     if (discountRow) discountRow.classList.remove("hidden");
     if (discountAmountElem) discountAmountElem.innerText = `- ₹${discount}`;
-    if (discountStatusText) discountStatusText.innerText = `🎉 10% Discount Unlocked! You saved ₹${discount}`;
+    if (discountStatusText) discountStatusText.innerText = `10% Discount Unlocked! You saved ₹${discount}`;
   } else {
     if (discountRow) discountRow.classList.add("hidden");
     const diff = 1000 - rawSubtotal;
@@ -799,7 +874,6 @@ function setupCheckoutForm() {
       createdAt: new Date().toISOString()
     };
 
-    // Save order locally for "My Orders" customer view
     try {
       let localOrders = JSON.parse(localStorage.getItem("vehraan_user_orders")) || [];
       localOrders.unshift(orderData);
@@ -874,7 +948,9 @@ window.handleGoogleSignIn = async function() {
       uid: currentUser.uid
     }));
 
-    updateAuthUI(currentUser.displayName ? currentUser.displayName.split(" ")[0].toUpperCase() : "MEMBER");
+    const firstName = currentUser.displayName ? currentUser.displayName.split(" ")[0].toUpperCase() : "MEMBER";
+    updateAuthUI(firstName);
+    updateNavHeaderTitle(firstName);
     closeAuthModal();
     showToast("Signed in successfully!");
   } catch (err) {
@@ -894,6 +970,13 @@ function updateAuthUI(name) {
       `;
     }
   });
+}
+
+function updateNavHeaderTitle(name) {
+  const headerTitle = document.getElementById("nav-header-title");
+  if (headerTitle) {
+    headerTitle.innerText = `HELLO, ${name}`;
+  }
 }
 
 window.handleSignOut = function() {
@@ -953,12 +1036,15 @@ function setupSearchListeners() {
     const query = e.target.value.toLowerCase().trim();
     if (!query) { dropdown.innerHTML = ""; return; }
     const matched = catalogProducts.filter(p => p.name.toLowerCase().includes(query));
-    dropdown.innerHTML = matched.map(p => `
-      <div onclick="openProductDetailsModal('${p.id}'); toggleSearchModal(false);" class="flex items-center gap-3 p-2 hover:bg-neutral-100 rounded-lg cursor-pointer transition">
-        <img src="${p.image}" class="w-8 h-8 rounded object-cover border border-black/10" />
-        <div class="flex-1"><h4 class="text-[11px] font-semibold text-black truncate">${p.name}</h4><span class="text-[10px] text-neutral-500 font-mono-code">₹${p.price}</span></div>
-      </div>
-    `).join("");
+    dropdown.innerHTML = matched.map(p => {
+      const img = p.images ? p.images[0] : p.image;
+      return `
+        <div onclick="openProductDetailsModal('${p.id}'); toggleSearchModal(false);" class="flex items-center gap-3 p-2 hover:bg-neutral-100 rounded-lg cursor-pointer transition">
+          <img src="${img}" class="w-8 h-8 rounded object-cover border border-black/10" />
+          <div class="flex-1"><h4 class="text-[11px] font-semibold text-black truncate">${p.name}</h4><span class="text-[10px] text-neutral-500 font-mono-code">₹${p.price}</span></div>
+        </div>
+      `;
+    }).join("");
   });
 }
 
@@ -1007,9 +1093,9 @@ function renderSizeTable() {
 }
 
 const policyContent = {
-  about: { title: "About VEHRAAN Studio", body: "<p>VEHRAAN is an independent contemporary Indian luxury streetwear imprint crafted using 220 GSM bio-washed heavyweight cotton.</p>" },
-  shipping: { title: "Shipping & Dispatch", body: "<p>Express Cash on Delivery available across India pincodes within 24-48 hours.</p>" },
-  returns: { title: "Returns & Exchanges", body: "<p><strong>No Exchange, No Refund.</strong> All sales are final due to limited edition capsule drops.</p>" }
+  about: { title: "About VEHRAAN Studio", body: "<p>VEHRAAN is an independent contemporary Indian luxury streetwear imprint engineered with heavy-gauge 220 GSM bio-washed textiles and high-density screen graphics. Built for those who embrace raw street aesthetics and uncompromising garment weight.</p>" },
+  shipping: { title: "Shipping & Dispatch", body: "<p>Express Cash on Delivery available across India pincodes within 24-48 hours. Every order is meticulously quality-checked and dispatched directly from our studio.</p>" },
+  returns: { title: "Returns & Exchanges", body: "<p><strong>No Exchange, No Refund.</strong> All capsule drops are final sale due to strict limited-edition production runs.</p>" }
 };
 
 window.openPolicyModal = function(type) {
@@ -1023,7 +1109,7 @@ window.closePolicyModal = function() {
   document.getElementById("policy-modal")?.classList.add("hidden");
 };
 
-// 13. STUDIO CMS & ADMIN PANEL
+// 13. STUDIO CMS & ADMIN PANEL (SUPPORTING 1-5 PRODUCT IMAGES)
 window.triggerAdminAccess = async function() {
   if (!currentUser || !firebase.auth().currentUser) {
     showToast("Please sign in with your admin account first.");
@@ -1058,7 +1144,7 @@ function loadCategoryDropdown() {
   const tags = ["all", "men", "women", "anime", "spider", "f1"];
   catalogProducts.forEach(p => p.tags?.forEach(t => tags.push(t)));
   const uniqueTags = Array.from(new Set(tags)).filter(t => t !== "tee" && t !== "unisex");
-  select.innerHTML = uniqueTags.map(t => `<option value="${t}">${t.toUpperCase()}</option>`).join("") + `<option value="custom">➕ Create New Section...</option>`;
+  select.innerHTML = uniqueTags.map(t => `<option value="${t}">${t.toUpperCase()}</option>`).join("") + `<option value="custom">Create New Section...</option>`;
 }
 
 window.handleCategorySelection = function() {
@@ -1076,16 +1162,31 @@ function setupAdminForm() {
   const fileInput = document.getElementById("adm-file-input");
 
   fileInput?.addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      alert("Maximum 5 photos allowed per product!");
+      fileInput.value = "";
+      return;
+    }
+
+    uploadedProductImages = [];
+    const previewContainer = document.getElementById("adm-preview-container");
+    if (previewContainer) previewContainer.innerHTML = "";
+
+    files.forEach(file => {
       const reader = new FileReader();
       reader.onload = ev => {
-        uploadedProductBase64 = ev.target.result;
-        document.getElementById("adm-preview-img").src = uploadedProductBase64;
-        document.getElementById("adm-preview-box").classList.remove("hidden");
+        uploadedProductImages.push(ev.target.result);
+        if (previewContainer) {
+          previewContainer.innerHTML += `
+            <div class="w-16 h-16 bg-white rounded-xl border border-black/15 overflow-hidden flex items-center justify-center shrink-0">
+              <img src="${ev.target.result}" class="w-full h-full object-contain" />
+            </div>
+          `;
+        }
       };
       reader.readAsDataURL(file);
-    }
+    });
   });
 
   form?.addEventListener("submit", async e => {
@@ -1100,8 +1201,8 @@ function setupAdminForm() {
       selectedCategory = customCatInput;
     }
 
-    if (!uploadedProductBase64) {
-      alert("Please select a product photo from your gallery first!");
+    if (uploadedProductImages.length === 0) {
+      alert("Please select at least 1 product photo from your gallery!");
       return;
     }
 
@@ -1110,8 +1211,8 @@ function setupAdminForm() {
       name,
       price,
       originalPrice: 999,
-      image: uploadedProductBase64,
-      fallbackImage: uploadedProductBase64,
+      images: uploadedProductImages,
+      image: uploadedProductImages[0],
       sizes: ["S", "M", "L", "XL", "XXL"],
       tags: ["all", selectedCategory],
       inStock: true
@@ -1126,8 +1227,8 @@ function setupAdminForm() {
     }
 
     form.reset();
-    uploadedProductBase64 = "";
-    document.getElementById("adm-preview-box")?.classList.add("hidden");
+    uploadedProductImages = [];
+    document.getElementById("adm-preview-container").innerHTML = "";
     document.getElementById("adm-custom-category-box")?.classList.add("hidden");
     showToast(`Published "${name}" successfully!`);
     closeAdminModal();
@@ -1140,9 +1241,10 @@ function loadManageProducts() {
   
   container.innerHTML = catalogProducts.map((p, idx) => {
     const isAvailable = p.inStock !== false;
+    const img = p.images ? p.images[0] : p.image;
     return `
       <div class="flex items-center justify-between p-3 bg-neutral-100 border border-black/10 rounded-xl gap-2">
-        <img src="${p.image}" class="w-10 h-10 object-cover rounded border" />
+        <img src="${img}" class="w-10 h-10 object-cover rounded border" />
         <div class="flex-1 min-w-0">
           <h4 class="text-xs font-semibold text-black truncate">${p.name}</h4>
           <div class="flex items-center gap-2 mt-1">
